@@ -7,6 +7,10 @@ import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
 import Dashboard from "./pages/Dashboard";
 import Upload from "./pages/Upload";
+import AnalysisResults from "./pages/AnalysisResults";
+import ProtocolMapping from "./pages/ProtocolMapping";
+import RiskCompliance from "./pages/RiskCompliance";
+import ApiIntegration from "./pages/ApiIntegration";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,10 +29,10 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/upload" element={<Upload />} />
-                <Route path="/results" element={<div className="text-center p-12"><h1 className="text-3xl font-orbitron">Analysis Results - Coming Soon</h1></div>} />
-                <Route path="/protocol" element={<div className="text-center p-12"><h1 className="text-3xl font-orbitron">Protocol Mapping - Coming Soon</h1></div>} />
-                <Route path="/compliance" element={<div className="text-center p-12"><h1 className="text-3xl font-orbitron">Risk & Compliance - Coming Soon</h1></div>} />
-                <Route path="/api" element={<div className="text-center p-12"><h1 className="text-3xl font-orbitron">API Integration - Coming Soon</h1></div>} />
+                <Route path="/results" element={<AnalysisResults />} />
+                <Route path="/protocol" element={<ProtocolMapping />} />
+                <Route path="/compliance" element={<RiskCompliance />} />
+                <Route path="/api" element={<ApiIntegration />} />
                 <Route path="/settings" element={<div className="text-center p-12"><h1 className="text-3xl font-orbitron">Settings - Coming Soon</h1></div>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

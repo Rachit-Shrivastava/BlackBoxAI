@@ -77,24 +77,26 @@ const ProtocolNode = ({ node, isSelected, onClick }: { node: any; isSelected: bo
 
   return (
     <div
-      className={`relative p-4 rounded-xl border-2 cursor-pointer transition-all ${
+      className={`relative p-4 rounded-xl border cursor-pointer transition-all w-64 ${
         isSelected 
-          ? "border-primary bg-primary/10" 
-          : "border-border hover:border-primary/50"
+          ? "border-primary bg-primary/5 shadow-lg" 
+          : "border-border-muted hover:border-primary/50 hover:bg-surface"
       }`}
       onClick={onClick}
     >
-      <div className="flex items-center gap-2 mb-2">
-        <div className={`w-3 h-3 rounded-full ${getNodeColor(node.confidence)}`} />
-        <span className="font-medium">{node.label}</span>
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <div className={`w-2.5 h-2.5 rounded-full ${getNodeColor(node.confidence)}`} />
+          <span className="font-medium text-sm">{node.label}</span>
+        </div>
         <Badge variant="outline" className="text-xs">
           {Math.round(node.confidence * 100)}%
         </Badge>
       </div>
-      <div className="text-sm text-muted-foreground">
+      <div className="text-sm text-secondary mb-2">
         {node.primitive}
       </div>
-      <div className="text-xs text-muted-foreground mt-1">
+      <div className="text-xs text-muted font-mono">
         {node.offsets.join(", ")}
       </div>
     </div>
@@ -105,8 +107,8 @@ const ProtocolGraph = ({ data }: { data: any }) => {
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
 
   return (
-    <div className="h-96 bg-muted/20 rounded-xl p-4 relative overflow-hidden">
-      <div className="absolute top-4 right-4 flex gap-2">
+    <div className="min-h-[400px] bg-surface rounded-xl p-6 relative">
+      <div className="absolute top-6 right-6 flex gap-2 z-10">
         <Button variant="outline" size="sm">
           <ZoomIn className="h-4 w-4" />
         </Button>
@@ -118,7 +120,7 @@ const ProtocolGraph = ({ data }: { data: any }) => {
         </Button>
       </div>
       
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 h-full">
+      <div className="flex flex-wrap justify-center gap-4 pt-8">
         {data.nodes.map((node: any) => (
           <ProtocolNode
             key={node.id}

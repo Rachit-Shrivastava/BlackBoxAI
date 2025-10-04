@@ -308,10 +308,11 @@ const AnalysisResults = () => {
 
   return (
     <div className="space-y-8">
-      {/* Hero Bar */}
-      <div className="enterprise-card p-6">
+      {/* Hero Bar with gradient accent */}
+      <div className="gradient-card p-6 relative overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-primary" />
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-3xl font-inter font-semibold">Analysis Results</h1>
+          <h1 className="text-3xl font-inter font-semibold text-gradient-primary">Analysis Results</h1>
           <div className="flex items-center gap-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -351,18 +352,31 @@ const AnalysisResults = () => {
         </div>
       </div>
 
-      {/* KPI Cards */}
+      {/* KPI Cards with gradient ribbons */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {kpiData.map((kpi, index) => (
-          <Card key={index} className="enterprise-card">
+          <Card key={index} className="gradient-card hover-gradient-glow group relative overflow-hidden">
+            <div className={`absolute top-0 left-0 right-0 h-1 ${
+              index === 0 ? 'bg-gradient-primary' :
+              index === 1 ? 'bg-gradient-success' :
+              index === 2 ? 'bg-gradient-to-r from-warning to-destructive' :
+              'bg-gradient-secondary'
+            }`} />
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-muted-foreground">{kpi.title}</p>
-                  <p className="text-2xl font-semibold mt-1">{kpi.value}</p>
+                  <p className="text-2xl font-semibold mt-1 group-hover:text-gradient-primary transition-all">{kpi.value}</p>
                   <p className="text-xs text-muted-foreground mt-1">{kpi.trend}</p>
                 </div>
-                <kpi.icon className="h-8 w-8 text-primary" />
+                <div className={`p-3 rounded-xl ${
+                  index === 0 ? 'bg-gradient-primary' :
+                  index === 1 ? 'bg-gradient-success' :
+                  index === 2 ? 'bg-gradient-to-br from-warning to-destructive' :
+                  'bg-gradient-secondary'
+                }`}>
+                  <kpi.icon className="h-6 w-6 text-white" />
+                </div>
               </div>
             </CardContent>
           </Card>

@@ -69,35 +69,44 @@ const protocolData = {
 };
 
 const ProtocolNode = ({ node, isSelected, onClick }: { node: any; isSelected: boolean; onClick: () => void }) => {
-  const getNodeColor = (confidence: number) => {
-    if (confidence >= 0.8) return "bg-success";
-    if (confidence >= 0.6) return "bg-warning";
-    return "bg-destructive";
+  const getNodeGradient = (confidence: number, primitive: string) => {
+    // Color by primitive type with gradients
+    if (primitive.includes('AES')) return 'bg-gradient-primary';
+    if (primitive.includes('RSA')) return 'bg-gradient-secondary';
+    if (primitive.includes('SHA')) return 'bg-gradient-success';
+    if (primitive.includes('ECC') || primitive.includes('ECDH') || primitive.includes('ECDSA')) return 'from-accent to-secondary bg-gradient-to-br';
+    if (primitive.includes('Poly')) return 'from-success-from to-success-to bg-gradient-to-br';
+    if (confidence >= 0.8) return 'bg-gradient-success';
+    if (confidence >= 0.6) return 'bg-gradient-to-br from-warning to-destructive';
+    return 'bg-gradient-to-br from-destructive to-warning';
   };
 
   return (
     <div
-      className={`relative p-4 rounded-xl border cursor-pointer transition-all w-64 ${
+      className={`relative p-4 rounded-xl border cursor-pointer transition-all w-64 hover-gradient-glow group ${
         isSelected 
-          ? "border-primary bg-primary/5 shadow-lg" 
-          : "border-border-muted hover:border-primary/50 hover:bg-surface"
+          ? "border-primary shadow-lg" 
+          : "border-border-muted hover:border-primary/50"
       }`}
       onClick={onClick}
     >
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
-          <div className={`w-2.5 h-2.5 rounded-full ${getNodeColor(node.confidence)}`} />
-          <span className="font-medium text-sm">{node.label}</span>
+      {isSelected && <div className="absolute inset-0 bg-gradient-primary opacity-5 rounded-xl" />}
+      <div className="relative z-10">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <div className={`w-3 h-3 rounded-full ${getNodeGradient(node.confidence, node.primitive)} shadow-lg`} />
+            <span className="font-medium text-sm">{node.label}</span>
+          </div>
+          <Badge variant="outline" className="text-xs border-primary/30">
+            {Math.round(node.confidence * 100)}%
+          </Badge>
         </div>
-        <Badge variant="outline" className="text-xs">
-          {Math.round(node.confidence * 100)}%
-        </Badge>
-      </div>
-      <div className="text-sm text-secondary mb-2">
-        {node.primitive}
-      </div>
-      <div className="text-xs text-muted font-mono">
-        {node.offsets.join(", ")}
+        <div className="text-sm text-text-secondary mb-2 group-hover:text-foreground transition-colors">
+          {node.primitive}
+        </div>
+        <div className="text-xs text-muted-foreground font-mono">
+          {node.offsets.join(", ")}
+        </div>
       </div>
     </div>
   );
@@ -179,10 +188,11 @@ const ProtocolMapping = () => {
 
   return (
     <div className="space-y-8">
-      {/* Header */}
-      <div className="enterprise-card p-6">
+      {/* Header with gradient */}
+      <div className="gradient-card p-6 relative overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-secondary" />
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-3xl font-inter font-semibold">Protocol Mapping</h1>
+          <h1 className="text-3xl font-inter font-semibold text-gradient-secondary">Protocol Mapping</h1>
           <div className="flex items-center gap-4">
             <Select value={selectedProtocol} onValueChange={setSelectedProtocol}>
               <SelectTrigger className="w-48">
@@ -221,14 +231,17 @@ const ProtocolMapping = () => {
         </div>
       </div>
 
-      {/* Two-pane layout */}
+      {/* Two-pane layout with gradient cards */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left: Interactive Graph */}
-        <Card className="enterprise-card">
+        <Card className="gradient-card hover-gradient-glow">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-primary" />
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Network className="h-5 w-5" />
-              Interactive Protocol Graph
+              <div className="p-2 rounded-lg bg-gradient-primary">
+                <Network className="h-4 w-4 text-white" />
+              </div>
+              <span>Interactive Protocol Graph</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -237,11 +250,14 @@ const ProtocolMapping = () => {
         </Card>
 
         {/* Right: Sequence Timeline */}
-        <Card className="enterprise-card">
+        <Card className="gradient-card hover-gradient-glow">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-success" />
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Clock className="h-5 w-5" />
-              Sequence Timeline
+              <div className="p-2 rounded-lg bg-gradient-success">
+                <Clock className="h-4 w-4 text-white" />
+              </div>
+              <span>Sequence Timeline</span>
             </CardTitle>
           </CardHeader>
           <CardContent>

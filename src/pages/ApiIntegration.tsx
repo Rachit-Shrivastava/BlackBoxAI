@@ -273,10 +273,11 @@ const ApiIntegration = () => {
 
   return (
     <div className="space-y-8">
-      {/* Header */}
-      <div className="enterprise-card p-6">
+      {/* Header with gradient */}
+      <div className="gradient-card p-6 relative overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-secondary" />
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-inter font-semibold">API Integration</h1>
+          <h1 className="text-3xl font-inter font-semibold text-gradient-secondary">API Integration</h1>
           <Button onClick={handleGenerateKey}>
             <Plus className="h-4 w-4 mr-2" />
             Generate New Key
@@ -299,20 +300,23 @@ const ApiIntegration = () => {
         </div>
       </div>
 
-      {/* Quickstart */}
-      <Card className="enterprise-card">
+      {/* Quickstart with gradient header */}
+      <Card className="gradient-card hover-gradient-glow">
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-secondary" />
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Code className="h-5 w-5" />
-            Quickstart Guide
+            <div className="p-2 rounded-lg bg-gradient-secondary">
+              <Code className="h-4 w-4 text-white" />
+            </div>
+            <span>Quickstart Guide</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
           <Tabs value={selectedLanguage} onValueChange={setSelectedLanguage}>
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="curl">cURL</TabsTrigger>
-              <TabsTrigger value="python">Python</TabsTrigger>
-              <TabsTrigger value="node">Node.js</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3 bg-surface/50">
+              <TabsTrigger value="curl" className="data-[state=active]:bg-gradient-primary data-[state=active]:text-white">cURL</TabsTrigger>
+              <TabsTrigger value="python" className="data-[state=active]:bg-gradient-primary data-[state=active]:text-white">Python</TabsTrigger>
+              <TabsTrigger value="node" className="data-[state=active]:bg-gradient-primary data-[state=active]:text-white">Node.js</TabsTrigger>
             </TabsList>
             
             <TabsContent value="curl" className="mt-6">

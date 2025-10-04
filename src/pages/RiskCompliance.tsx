@@ -214,10 +214,11 @@ const RiskCompliance = () => {
 
   return (
     <div className="space-y-8">
-      {/* Header */}
-      <div className="enterprise-card p-6">
+      {/* Header with gradient */}
+      <div className="gradient-card p-6 relative overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-success" />
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-inter font-semibold">Risk & Compliance</h1>
+          <h1 className="text-3xl font-inter font-semibold text-gradient-success">Risk & Compliance</h1>
           <div className="flex items-center gap-4">
             <Button variant="outline">
               <Download className="h-4 w-4 mr-2" />
@@ -231,39 +232,52 @@ const RiskCompliance = () => {
         </div>
       </div>
 
-      {/* Top Metrics */}
+      {/* Top Metrics with gradient gauges */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="enterprise-card">
+        <Card className="gradient-card hover-gradient-glow relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-warning to-destructive" />
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
-              <div>
+              <div className="flex-1">
                 <p className="text-sm text-muted-foreground">Overall Risk Score</p>
                 <p className="text-3xl font-semibold mt-1">{overallRiskScore}</p>
-                <div className="mt-2">
-                  <Progress value={overallRiskScore} className="w-full" />
+                <div className="mt-3 relative h-2 bg-muted rounded-full overflow-hidden">
+                  <div 
+                    className="absolute inset-y-0 left-0 bg-gradient-to-r from-success via-warning to-destructive rounded-full"
+                    style={{ width: `${overallRiskScore}%` }}
+                  />
                 </div>
               </div>
-              <Shield className="h-8 w-8 text-warning" />
+              <div className="p-3 rounded-xl bg-gradient-to-br from-warning to-destructive">
+                <Shield className="h-6 w-6 text-white" />
+              </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="enterprise-card">
+        <Card className="gradient-card hover-gradient-glow relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-success" />
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
-              <div>
+              <div className="flex-1">
                 <p className="text-sm text-muted-foreground">Compliance Pass Rate</p>
                 <p className="text-3xl font-semibold mt-1">{compliancePassRate}%</p>
-                <div className="mt-2">
-                  <Progress value={compliancePassRate} className="w-full" />
+                <div className="mt-3 relative h-2 bg-muted rounded-full overflow-hidden">
+                  <div 
+                    className="absolute inset-y-0 left-0 bg-gradient-success rounded-full"
+                    style={{ width: `${compliancePassRate}%` }}
+                  />
                 </div>
               </div>
-              <CheckCircle className="h-8 w-8 text-success" />
+              <div className="p-3 rounded-xl bg-gradient-success">
+                <CheckCircle className="h-6 w-6 text-white" />
+              </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="enterprise-card">
+        <Card className="gradient-card hover-gradient-glow relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-destructive to-warning" />
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -271,7 +285,9 @@ const RiskCompliance = () => {
                 <p className="text-3xl font-semibold mt-1">{algorithmsAtRisk}</p>
                 <p className="text-xs text-muted-foreground mt-1">Requires immediate attention</p>
               </div>
-              <AlertTriangle className="h-8 w-8 text-destructive" />
+              <div className="p-3 rounded-xl bg-gradient-to-br from-destructive to-warning animate-pulse">
+                <AlertTriangle className="h-6 w-6 text-white" />
+              </div>
             </div>
           </CardContent>
         </Card>
